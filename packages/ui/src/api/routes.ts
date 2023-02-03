@@ -1,3 +1,4 @@
+import { runSimulation, SimulationResponse } from "../services/simulation";
 
 export interface GetRouteProps {
   tokenIn: string;
@@ -16,7 +17,7 @@ export interface Route {
 }
 
 export interface GetRouteResponse {
-  originalPrice: number; // expressed in %
+  originalPriceImpact: number; // expressed in %
   priceRoutingImpact: number; // expressed in %
   slippageReduction: number; // expressed in %
   routes: Route[];
@@ -24,14 +25,23 @@ export interface GetRouteResponse {
   originalTokensOut: number;
 }
 
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function getOriginalPriceImpact({ammMidPrice, ammOutputPrice}: SimulationResponse) {
+  const difference =  ammMidPrice - ammOutputPrice;
+  if (difference === 0) return 0;
+  const proportionDiff = difference / ammMidPrice;
+  return proportionDiff * 100;
 }
 
+
 export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> {
-  await sleep(2000);
+
+  const result: SimulationResponse = await runSimulation(6000 * 1e6);
+  console.log(result);
+
+
+
   return {
-    originalPrice: -0.2,
+    originalPriceImpact: getOriginalPriceImpact(result),
     priceRoutingImpact: -0.02,
     slippageReduction: -0.33,
     tokensOut: 1002,
@@ -58,3 +68,4 @@ export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> 
     ]
   };
 }
+

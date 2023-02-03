@@ -1,14 +1,25 @@
-require('isomorphic-fetch')
+import * as fetch from 'isomorphic-fetch';
 import { Provider, Contract } from 'starknet';
 import BN from 'bn.js';
-const pairAbi = require('./abis/Pair.json')
-const factoryAbi = require('./abis/Factory.json')
-const orderBookAbi = require('./abis/OrderBook.json')
+import pairAbi from '../abis/Pair.json';
+import factoryAbi from '../abis/Factory.json';
+import orderBookAbi from '../abis/OrderBook.json';
 
 const ETH = '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7';
 const USDC = '0x005a643907b9a4bc6a55e9069c4fd5fd1f5c79a22470690f75556c4736e34426';
 const factoryAddress = '0x262744f8cea943dadc8823c318eaf24d0110dee2ee8026298f49a3bc58ed74a';
 const orderBookAddress = '0x017c254cb2a3652455984e3da0ad97b377d80b62c4b87402c5b50c0f7bdd72f0';
+
+export interface SimulationResponse {
+  finalPrice: number;
+  ammMidPrice: number;
+  ammOutputPrice: number;
+  ammOutput: number;
+  bestOutput: number;
+  clobOutput: number
+  remainingInput: number;
+  selectedOrders: { price: number, amount: number }[],
+}
 
 function getAMMOutput(input: BN, reserveInput: BN, reserveOutput: BN): BN {
   return reserveOutput.sub(reserveInput.mul(reserveOutput).div(reserveInput.add(input.mul(new BN(997)).div(new BN(1000)))));
@@ -37,11 +48,6 @@ function getPartialFill({ order, remainingInput, reserve0, reserve1, currentOrde
 
   for (let i = 0; i < 10; i += 1) {
     const orderCost = order.price.mul(amount).div(new BN(10).pow(new BN(30)));
-
-    // if (orderCost.gt(remainingInput)) {
-    //   break;
-    // }
-
     const ammOut = getAMMOutput(remainingInput.sub(orderCost), reserve0, reserve1);
     const output = currentOrderOutput.add(order.amount).add(ammOut);
 
@@ -56,7 +62,7 @@ function getPartialFill({ order, remainingInput, reserve0, reserve1, currentOrde
   return { amount, price: order.price };
 }
 
-async function runSimulation(input: number) {
+export async function runSimulation(input: number): Promise<SimulationResponse> {
   const provider = new Provider({
     sequencer: {
       network: 'goerli-alpha',
@@ -66,9 +72,6 @@ async function runSimulation(input: number) {
   const orderBook = new Contract(orderBookAbi, orderBookAddress, provider);
   const { prices, amounts } = await orderBook.view_order_book_orders(ETH, USDC, 0);
   const orders: Order[] = (prices as any[]).map((price: BN, i) => ({ price, amount: amounts[i] as BN }));
-  // @ts-ignore
-  console.log(orders.map(printableOrder));
-
   const factory = new Contract(factoryAbi, factoryAddress, provider);
   const { pair } = await factory.get_pair(USDC, ETH);
 
@@ -91,10 +94,7 @@ async function runSimulation(input: number) {
   let currentOrderOutput = new BN(0);
 
   for (const order of orders) {
-    // console.log({ price: order.price.toString(), amount: order.amount.toString() })
     const orderCost = order.price.mul(order.amount).div(new BN(10).pow(new BN(30)));
-    // @ts-ignore
-    // console.log({orderCost: orderCost.toString() / 1e30 })
     if (orderCost.gt(remainingInput)) {
       const partialOrder = { amount: remainingInput, price: order.price }
       const partialFill = getPartialFill({
@@ -111,7 +111,6 @@ async function runSimulation(input: number) {
     }
 
     const ammOut = getAMMOutput(remainingInput.sub(orderCost), reserve0.low, reserve1.low);
-
     const output = currentOrderOutput.add(order.amount).add(ammOut);
 
     if (output > bestOutput) {
@@ -136,7 +135,7 @@ async function runSimulation(input: number) {
   // @ts-ignore
   const finalPrice = input / bestOutput.toString() * 1e12;
 
-  console.log({
+  return {
     finalPrice,
     ammMidPrice,
     ammOutputPrice,
@@ -145,7 +144,5 @@ async function runSimulation(input: number) {
     clobOutput: parseInt(currentOrderOutput.toString()) / 1e6,
     remainingInput: parseInt(remainingInput.toString()) / 1e6,
     selectedOrders: selectedOrders.map(printableOrder),
-  })
+  };
 }
-
-runSimulation(60000 * 1e6)
