@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { Stack, Input, Paper, AppShell, Center, Button, Select, Header, Text } from '@mantine/core';
-import { tokens } from './tokens';
-import { SelectItem } from './components/SelectItem';
+import { Stack, Paper, AppShell, Center, Button, Header, Text, Loader } from '@mantine/core';
+import { TokenSelect } from './components/TokenSelect';
+import { getRoute } from './api/routes';
 
 function App() {
+  
+  const [loading, setLoading] = useState(false);
+  const [amount, setAmount] = useState<number>();
+  const [tokenIn, setTokenIn] = useState<string | null>();
+  const [tokenOut, setTokenOut] = useState<string | null>();
+  
+  const onPreviewRoute = async () => {
+    if (!amount || !tokenIn || !tokenOut) return;
+    setLoading(true);
+    const result = await getRoute({
+      amountIn: amount,
+      tokenIn: tokenIn,
+      tokenOut: tokenOut
+    });
+    setLoading(false);
+  }
 
   return (
     <AppShell
@@ -16,42 +32,20 @@ function App() {
         </Header>
       }
     >
-
       <Center>
         <Paper w={400} p={'lg'} pt={50} withBorder radius={'lg'}>
           <Stack spacing="xs">
-            <Input
-              variant="filled"
-              placeholder="0"
-              radius="md"
-              size="xl"
-              type={'number'}
-              rightSectionWidth={130}
-              rightSection={<Select
-                itemComponent={SelectItem}
-                mr={10}
-                data={tokens}
-                placeholder="Token"
-                radius="xl"
-              />}
-            />
-            <Input
-              variant="filled"
-              placeholder="0"
-              radius="md"
-              size="xl"
-              type={'number'}
-              rightSectionWidth={130}
-              rightSection={<Select
-                itemComponent={SelectItem}
-                mr={10}
-                data={tokens}
-                placeholder="Token"
-                radius="xl"
-              />}
-            />
-            <Button color="orange" mt={'xl'} radius="lg" size="xl">
-              Preview Route
+            <TokenSelect onChange={(v) => setAmount(v)} onTokenSelected={(t) => setTokenIn(t)}/>
+            <TokenSelect onChange={() => {}} disabled onTokenSelected={(t) => setTokenOut(t)}/>
+            <Button
+              disabled={loading}
+              color={"orange"}
+              mt={'xl'} 
+              radius="lg" 
+              size="xl" 
+              onClick={onPreviewRoute} 
+              leftIcon={loading && <Loader size={'xs'}/>}>
+              {loading ? <Text color={'dimmed'}>Finding best route</Text> : 'Preview Route'}
             </Button>
           </Stack>
         </Paper>
