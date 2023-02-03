@@ -1,0 +1,892 @@
+[
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      },
+      {
+        "name": "bid_tree_id",
+        "type": "felt"
+      },
+      {
+        "name": "ask_tree_id",
+        "type": "felt"
+      },
+      {
+        "name": "lowest_ask",
+        "type": "felt"
+      },
+      {
+        "name": "highest_bid",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "log_create_market",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      },
+      {
+        "name": "limit_id",
+        "type": "felt"
+      },
+      {
+        "name": "market_id",
+        "type": "felt"
+      },
+      {
+        "name": "dt",
+        "type": "felt"
+      },
+      {
+        "name": "owner",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "post_only",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "log_create_bid",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      },
+      {
+        "name": "limit_id",
+        "type": "felt"
+      },
+      {
+        "name": "market_id",
+        "type": "felt"
+      },
+      {
+        "name": "dt",
+        "type": "felt"
+      },
+      {
+        "name": "owner",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "post_only",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "log_create_ask",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      },
+      {
+        "name": "limit_id",
+        "type": "felt"
+      },
+      {
+        "name": "market_id",
+        "type": "felt"
+      },
+      {
+        "name": "dt",
+        "type": "felt"
+      },
+      {
+        "name": "owner",
+        "type": "felt"
+      },
+      {
+        "name": "seller",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "total_filled",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "log_bid_taken",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      },
+      {
+        "name": "limit_id",
+        "type": "felt"
+      },
+      {
+        "name": "market_id",
+        "type": "felt"
+      },
+      {
+        "name": "dt",
+        "type": "felt"
+      },
+      {
+        "name": "owner",
+        "type": "felt"
+      },
+      {
+        "name": "buyer",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "total_filled",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "log_offer_taken",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      },
+      {
+        "name": "limit_id",
+        "type": "felt"
+      },
+      {
+        "name": "market_id",
+        "type": "felt"
+      },
+      {
+        "name": "dt",
+        "type": "felt"
+      },
+      {
+        "name": "buyer",
+        "type": "felt"
+      },
+      {
+        "name": "seller",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "total_filled",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "log_buy_filled",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      },
+      {
+        "name": "limit_id",
+        "type": "felt"
+      },
+      {
+        "name": "market_id",
+        "type": "felt"
+      },
+      {
+        "name": "dt",
+        "type": "felt"
+      },
+      {
+        "name": "seller",
+        "type": "felt"
+      },
+      {
+        "name": "buyer",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "total_filled",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "log_sell_filled",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      },
+      {
+        "name": "limit_id",
+        "type": "felt"
+      },
+      {
+        "name": "market_id",
+        "type": "felt"
+      },
+      {
+        "name": "dt",
+        "type": "felt"
+      },
+      {
+        "name": "owner",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "filled",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "log_delete_order",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousOwner",
+        "type": "felt"
+      },
+      {
+        "name": "newOwner",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "name": "constructor",
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "felt"
+      },
+      {
+        "name": "storage_addr",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "set_addresses",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "_l2_eth_remote_core_addr",
+        "type": "felt"
+      },
+      {
+        "name": "_l2_eth_remote_eip_712_addr",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "create_market",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "view_order_book",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "is_bid",
+        "type": "felt"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "prices_len",
+        "type": "felt"
+      },
+      {
+        "name": "prices",
+        "type": "felt*"
+      },
+      {
+        "name": "amounts_len",
+        "type": "felt"
+      },
+      {
+        "name": "amounts",
+        "type": "felt*"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "view_order_book_orders",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "is_bid",
+        "type": "felt"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "prices_len",
+        "type": "felt"
+      },
+      {
+        "name": "prices",
+        "type": "felt*"
+      },
+      {
+        "name": "amounts_len",
+        "type": "felt"
+      },
+      {
+        "name": "amounts",
+        "type": "felt*"
+      },
+      {
+        "name": "owners_len",
+        "type": "felt"
+      },
+      {
+        "name": "owners",
+        "type": "felt*"
+      },
+      {
+        "name": "ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "ids",
+        "type": "felt*"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "create_bid",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "post_only",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "remote_create_bid",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "post_only",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "create_ask",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "post_only",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "remote_create_ask",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      },
+      {
+        "name": "post_only",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "market_buy",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "remote_market_buy",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "market_sell",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "remote_market_sell",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "felt"
+      },
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "cancel_order",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "order_id",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "remote_cancel_order",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "felt"
+      },
+      {
+        "name": "order_id",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "deposit",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "asset",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "remote_deposit",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "felt"
+      },
+      {
+        "name": "asset",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdraw",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "asset",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "remote_withdraw",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "felt"
+      },
+      {
+        "name": "chain_id",
+        "type": "felt"
+      },
+      {
+        "name": "asset",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "get_balance",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "felt"
+      },
+      {
+        "name": "asset",
+        "type": "felt"
+      },
+      {
+        "name": "in_account",
+        "type": "felt"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "fetch_quote",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "base_asset",
+        "type": "felt"
+      },
+      {
+        "name": "quote_asset",
+        "type": "felt"
+      },
+      {
+        "name": "is_buy",
+        "type": "felt"
+      },
+      {
+        "name": "amount",
+        "type": "felt"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "price",
+        "type": "felt"
+      },
+      {
+        "name": "base_amount",
+        "type": "felt"
+      },
+      {
+        "name": "quote_amount",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]
