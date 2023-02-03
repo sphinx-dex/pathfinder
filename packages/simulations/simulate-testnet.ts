@@ -15,7 +15,7 @@ function getAMMOutput(input: BN, reserveInput: BN, reserveOutput: BN): BN {
   // return reserveOutput - ((reserveInput * reserveOutput) / (reserveInput + (input * 0.997)));
 }
 
-const input = 90000 * 1e6;
+const input = 60000 * 1e6;
 
 interface Order {
   price: BN
@@ -26,6 +26,37 @@ const printableOrder = (order: Order) => ({
   price: parseInt(order.price.toString()) / 1e18,
   amount: parseInt(order.amount.toString()) / 1e18,
 })
+
+function getPartialFill({ order, remainingInput, reserve0, reserve1, currentOrderOutput, bestOutput }: {
+  order: Order,
+  remainingInput: BN,
+  reserve0: BN,
+  reserve1: BN,
+  currentOrderOutput: BN
+  bestOutput: BN
+}) {
+  let amount = order.amount.div(new BN(2));
+
+  for (let i = 0; i < 10; i += 1) {
+    const orderCost = order.price.mul(amount).div(new BN(10).pow(new BN(30)));
+
+    // if (orderCost.gt(remainingInput)) {
+    //   break;
+    // }
+
+    const ammOut = getAMMOutput(remainingInput.sub(orderCost), reserve0, reserve1);
+    const output = currentOrderOutput.add(order.amount).add(ammOut);
+
+    if (output > bestOutput) {
+      amount = amount.add(order.amount.div(new BN(2 ** i)));
+    } else {
+      amount = amount.sub(order.amount.div(new BN(2 ** i)));
+      break;
+    }
+  }
+
+  return { amount, price: order.price };
+}
 
 async function runSimulation() {
   const provider = new Provider({
@@ -67,6 +98,17 @@ async function runSimulation() {
     // @ts-ignore
     // console.log({orderCost: orderCost.toString() / 1e30 })
     if (orderCost.gt(remainingInput)) {
+      const partialOrder = { amount: remainingInput, price: order.price }
+      const partialFill = getPartialFill({
+        order: partialOrder,
+        remainingInput,
+        reserve0: reserve0.low,
+        reserve1: reserve1.low,
+        currentOrderOutput,
+        bestOutput,
+      });
+      selectedOrders.push(partialFill);
+
       break;
     }
 
@@ -80,6 +122,15 @@ async function runSimulation() {
       bestOutput = output;
       currentOrderOutput = currentOrderOutput.add(order.amount);
     } else {
+      const partialFill = getPartialFill({
+        order,
+        remainingInput,
+        reserve0,
+        reserve1,
+        currentOrderOutput,
+        bestOutput,
+      });
+      selectedOrders.push(partialFill);
       break;
     }
   }
