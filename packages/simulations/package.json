@@ -1,0 +1,11 @@
+{
+  "name": "simulations",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "<david@dmihal.com>",
+  "license": "MIT",
+  "dependencies": {
+    "isomorphic-fetch": "^3.0.0",
+    "starknet": "^4.17.1"
+  }
+}
