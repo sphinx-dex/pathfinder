@@ -5,12 +5,14 @@ import { SelectItem } from "./SelectItem";
 interface TokenSelectProps {
   onChange: (v: number) => void,
   onTokenSelected: (t: string | null) => void,
-  disabled?: boolean 
+  disabled?: boolean,
+  value?: string
 }
 
-export function TokenSelect({ disabled, onChange, onTokenSelected }: TokenSelectProps ) {
+export function TokenSelect({ disabled, onChange, onTokenSelected, value }: TokenSelectProps ) {
   return (
     <Input
+      value={value}
       variant="filled"
       placeholder="0"
       radius="md"

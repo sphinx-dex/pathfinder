@@ -9,8 +9,8 @@ function App() {
   
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState<number>();
-  const [tokenIn, setTokenIn] = useState<string | null>();
-  const [tokenOut, setTokenOut] = useState<string | null>();
+  const [tokenIn, setTokenIn] = useState<string | undefined>();
+  const [tokenOut, setTokenOut] = useState<string | undefined>();
 
   const [result, setResult] = useState<GetRouteResponse>();
 
@@ -25,6 +25,7 @@ function App() {
       tokenOut: tokenOut
     });
     setResult(response);
+    setTokenOut(response.tokensOut.toString());
     setLoading(false);
   }
 
@@ -39,10 +40,10 @@ function App() {
       }
     >
       <Center>
-        <Paper w={400} p={'lg'} pt={50} withBorder radius={'lg'}>
+        <Paper w={450} p={'lg'} pt={50} withBorder radius={'lg'}>
           <Stack spacing="xs">
-            <TokenSelect onChange={(v) => setAmount(v)} onTokenSelected={(t) => setTokenIn(t)}/>
-            <TokenSelect onChange={() => {}} disabled onTokenSelected={(t) => setTokenOut(t)}/>
+            <TokenSelect onChange={(v) => setAmount(v)} onTokenSelected={(t) => setTokenIn(t ?? undefined)}/>
+            <TokenSelect value={tokenOut} onChange={() => {}} disabled onTokenSelected={(t) => setTokenOut(t ?? undefined)}/>
             {result && 
              <Results result={result} tokenOut={tokenOut} />
             }

@@ -26,26 +26,44 @@ export interface GetRouteResponse {
 }
 
 function getOriginalPriceImpact({ammMidPrice, ammOutputPrice}: SimulationResponse) {
-  const difference =  ammMidPrice - ammOutputPrice;
-  if (difference === 0) return 0;
-  const proportionDiff = difference / ammMidPrice;
-  return proportionDiff * 100;
+  if (ammOutputPrice === 0) return 0;
+  const diff = ammOutputPrice - ammMidPrice;
+  const proportionalDiff = diff / ammOutputPrice;
+  return proportionalDiff * 100;
 }
 
+function getAfterPriceRoutingImpact({ammMidPrice, finalPrice}: SimulationResponse) {
+  if (finalPrice === 0) return 0;
+  const diff = finalPrice - ammMidPrice;
+  const proportionalDiff = diff / finalPrice;
+  return proportionalDiff * 100;
+}
+
+function getSlippageReduction({ ammMidPrice, ammOutputPrice, finalPrice }: SimulationResponse) {
+  const slippageWithoutRouting = ammOutputPrice - ammMidPrice;
+  const slippageWithRouting = finalPrice - ammMidPrice;
+  if (slippageWithoutRouting === 0) return 0;
+
+  const diff = slippageWithRouting - slippageWithoutRouting ;
+  const proportionalDiff = diff / slippageWithoutRouting;
+  return proportionalDiff * 100;
+}
+
+function getProportions(input: number, remainingInput: number): [jediswap: number, sphinx: number] {
+  const diff = input - remainingInput;
+  const jediswapProportion = diff / input;
+  const sphinxProportion = 1 - jediswapProportion;
+  return [jediswapProportion, sphinxProportion];
+}
 
 export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> {
-
-  const result: SimulationResponse = await runSimulation(6000 * 1e6);
-  console.log(result);
-
-
-
+  const result: SimulationResponse = await runSimulation(props.amountIn * 1e6);
   return {
     originalPriceImpact: getOriginalPriceImpact(result),
-    priceRoutingImpact: -0.02,
-    slippageReduction: -0.33,
-    tokensOut: 1002,
-    originalTokensOut: 889,
+    priceRoutingImpact: getAfterPriceRoutingImpact(result),
+    slippageReduction: getSlippageReduction(result),
+    tokensOut: result.finalPrice,
+    originalTokensOut: result.ammOutputPrice,
     routes: [
       {
         amm: 'Jediswap',
@@ -54,7 +72,7 @@ export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> 
           in: 'ETH',
           out: 'USDC'
         },
-        proportion: 0.2
+        proportion: getProportions(props.amountIn, result.remainingInput)[0] * 100
       },
       {
         amm: 'Sphinx',
@@ -63,7 +81,7 @@ export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> 
           in: 'ETH',
           out: 'USDC'
         },
-        proportion: 0.8
+        proportion: getProportions(props.amountIn, result.remainingInput)[1] * 100
       }
     ]
   };

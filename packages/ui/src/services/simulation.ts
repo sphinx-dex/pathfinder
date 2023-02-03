@@ -122,8 +122,8 @@ export async function runSimulation(input: number): Promise<SimulationResponse> 
       const partialFill = getPartialFill({
         order,
         remainingInput,
-        reserve0,
-        reserve1,
+        reserve0: reserve0.low,
+        reserve1: reserve1.low,
         currentOrderOutput,
         bestOutput,
       });
