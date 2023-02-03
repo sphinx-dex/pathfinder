@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import { Stack, Paper, AppShell, Center, Button, Header, Text, Loader } from '@mantine/core';
 import { TokenSelect } from './components/TokenSelect';
-import { getRoute } from './api/routes';
+import { getRoute, GetRouteResponse } from './api/routes';
+import { Results } from './components/Results';
 
 function App() {
   
@@ -10,15 +11,20 @@ function App() {
   const [amount, setAmount] = useState<number>();
   const [tokenIn, setTokenIn] = useState<string | null>();
   const [tokenOut, setTokenOut] = useState<string | null>();
+
+  const [result, setResult] = useState<GetRouteResponse>();
+
+  const valid = amount && tokenIn && tokenOut;
   
   const onPreviewRoute = async () => {
     if (!amount || !tokenIn || !tokenOut) return;
     setLoading(true);
-    const result = await getRoute({
+    const response = await getRoute({
       amountIn: amount,
       tokenIn: tokenIn,
       tokenOut: tokenOut
     });
+    setResult(response);
     setLoading(false);
   }
 
@@ -37,8 +43,11 @@ function App() {
           <Stack spacing="xs">
             <TokenSelect onChange={(v) => setAmount(v)} onTokenSelected={(t) => setTokenIn(t)}/>
             <TokenSelect onChange={() => {}} disabled onTokenSelected={(t) => setTokenOut(t)}/>
+            {result && 
+             <Results result={result} tokenOut={tokenOut} />
+            }
             <Button
-              disabled={loading}
+              disabled={loading || !valid}
               color={"orange"}
               mt={'xl'} 
               radius="lg" 
