@@ -45,16 +45,18 @@ function App() {
   return (
     <AppShell
       header={
-        <Header height={{ base: 50, md: 70 }} p="md">
-          <Group>
-            <Avatar src={logo} alt={'sphinx'} size={'md'}></Avatar>
-            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-              <Text>Pathfinder</Text>
-            </div>
-          </Group>
-          <Group>
-            <ConnectWallet />
-          </Group>
+        <Header height={70} p="md">
+          <div style={{ display:'flex', justifyContent:'space-between' }}>
+            <Group>
+              <Avatar src={logo} alt={'sphinx'} size={'md'}></Avatar>
+              <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                <Text>Pathfinder</Text>
+              </div>
+            </Group>
+            <Group>
+              <ConnectWallet />
+            </Group>
+          </div>
         </Header>
       }
     >
