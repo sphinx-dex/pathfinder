@@ -34,6 +34,7 @@ function App() {
 
   const onParameterChanged = () => {
     setResult(undefined);
+    setAmountOut(0);
   }
 
   return (
