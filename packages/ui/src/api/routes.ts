@@ -35,14 +35,14 @@ export interface GetRouteResponse {
 function getOriginalPriceImpact({ammMidPrice, ammOutputPrice}: SimulationResponse) {
   if (ammOutputPrice === 0) return 0;
   const diff = ammOutputPrice - ammMidPrice;
-  const proportionalDiff = diff / ammOutputPrice;
+  const proportionalDiff = diff / ammMidPrice;
   return proportionalDiff * 100;
 }
 
 function getAfterPriceRoutingImpact({ammMidPrice, finalPrice}: SimulationResponse) {
   if (finalPrice === 0) return 0;
   const diff = finalPrice - ammMidPrice;
-  const proportionalDiff = diff / finalPrice;
+  const proportionalDiff = diff / ammMidPrice;
   return proportionalDiff * 100;
 }
 

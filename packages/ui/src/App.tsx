@@ -44,6 +44,10 @@ function App() {
     setLoading(false);
   }
 
+  const onSwap = async () => {
+    throw Error('not implemented');
+  }
+
   const onParameterChanged = () => {
     setResult(undefined);
     setAmountOut(0);
@@ -64,16 +68,18 @@ function App() {
   return (
     <AppShell
       header={
-        <Header height={{ base: 50, md: 70 }} p="md">
-          <Group>
-            <Avatar src={logo} alt={'sphinx'} size={'md'}></Avatar>
-            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-              <Text>Pathfinder</Text>
-            </div>
-          </Group>
-          <Group>
-            <ConnectWallet onWalletChange={setWallet} />
-          </Group>
+        <Header height={70} p="md">
+          <div style={{ display:'flex', justifyContent:'space-between' }}>
+            <Group>
+              <Avatar src={logo} alt={'sphinx'} size={'md'}></Avatar>
+              <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                <Text>Pathfinder</Text>
+              </div>
+            </Group>
+            <Group>
+              <ConnectWallet onWalletChange={setWallet} />
+            </Group>
+          </div>
         </Header>
       }
     >
@@ -94,9 +100,12 @@ function App() {
               mt={'xl'} 
               radius="lg" 
               size="xl" 
-              onClick={onPreviewRoute} 
+              onClick={result ? onSwap : onPreviewRoute} 
               leftIcon={loading && <Loader size={'xs'}/>}>
-              {loading ? <Text color={'dimmed'}>Finding best route</Text> : 'Preview Route'}
+              
+              {loading ? 
+                <Text color={'dimmed'}>Finding best route</Text> : 
+                result ? 'Swap' : 'Preview Route'}
             </Button>
             <Button onClick={swap}>Swap</Button>
           </Stack>
