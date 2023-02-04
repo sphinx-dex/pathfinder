@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Stack, Paper, AppShell, Center, Button, Header, Text, Loader } from '@mantine/core';
+import { Stack, Paper, AppShell, Center, Button, Header, Text, Loader, Avatar, Group } from '@mantine/core';
 import { TokenSelect } from './components/TokenSelect';
 import { getRoute, GetRouteResponse } from './api/routes';
 import { Results } from './components/Results';
 import { tokens } from './tokens';
+import logo from './assets/sphinx_logo.png'
 
 function App() {
   
@@ -35,9 +36,13 @@ function App() {
     <AppShell
       header={
         <Header height={{ base: 50, md: 70 }} p="md">
-          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <Text>Sphinx Pathfinder</Text>
-          </div>
+          <Group>
+            <Avatar src={logo} alt={'sphinx'} size={'md'}></Avatar>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Text>Pathfinder</Text>
+            </div>
+          </Group>
+
         </Header>
       }
     >
