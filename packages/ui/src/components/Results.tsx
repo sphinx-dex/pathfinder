@@ -53,9 +53,9 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
   return (
     <Stack>
       <Paper radius={20} style={{ textAlign: 'start', background: '#2C2E33' }} p={'md'}>
-        <ResultLine name={'Original slippage on Jediswap'} color={'red'} result={`-${result.originalPriceImpact.toFixed(2)}%`}/>
+        <ResultLine name={'Original slippage on Jediswap'} color={'red'} result={`${result.originalPriceImpact.toFixed(2)}%`}/>
         <Divider></Divider>
-        <ResultLine name={'Slippage after routing optimization'} color={'rgb(243 138 32)'} result={`-${result.priceRoutingImpact.toFixed(2)}%`}/>
+        <ResultLine name={'Slippage after routing optimization'} color={'rgb(243 138 32)'} result={`${result.priceRoutingImpact.toFixed(2)}%`}/>
         <Divider></Divider>
         <ResultLine name={'Slippage reduction'} color={'#0fe337'} result={`+${result.slippageReduction.toFixed(2)}%`}/>
         <Divider></Divider>

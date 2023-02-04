@@ -18,6 +18,8 @@ export interface SimulationResponse {
   bestOutput: number;
   clobOutput: number
   remainingInput: number;
+  reserve0: BN,
+  reserve1: BN,
   selectedOrders: { price: number, amount: number }[],
 }
 
@@ -139,6 +141,8 @@ export async function runSimulation(input: number): Promise<SimulationResponse> 
     finalPrice,
     ammMidPrice,
     ammOutputPrice,
+    reserve0: reserve0.low,
+    reserve1: reserve1.low,
     ammOutput: parseInt(ammOutput.toString()) / 1e18,
     bestOutput: parseInt(bestOutput.toString()) / 1e18,
     clobOutput: parseInt(currentOrderOutput.toString()) / 1e6,
