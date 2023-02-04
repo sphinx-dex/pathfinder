@@ -1,4 +1,3 @@
-import * as fetch from 'isomorphic-fetch';
 import { Provider, Contract } from 'starknet';
 import BN from 'bn.js';
 import pairAbi from '../abis/Pair.json';
@@ -17,10 +16,10 @@ export interface SimulationResponse {
   ammOutput: number;
   bestOutput: number;
   clobOutput: number
-  remainingInput: number;
+  remainingInput: BN;
   reserve0: BN,
   reserve1: BN,
-  selectedOrders: { price: number, amount: number }[],
+  selectedOrders: { price: BN, amount: BN }[],
 }
 
 function getAMMOutput(input: BN, reserveInput: BN, reserveOutput: BN): BN {
@@ -86,7 +85,9 @@ export async function runSimulation(input: number): Promise<SimulationResponse> 
     throw new Error('Couldn\'t find pair');
   }
 
-  const contract = new Contract(pairAbi, '0x' + pair.toString(16), provider);
+  const ammPair = '0x' + pair.toString(16);
+
+  const contract = new Contract(pairAbi, ammPair, provider);
   const { reserve0, reserve1 } = await contract.get_reserves();
 
   const ammMidPrice = reserve0.low.toString() / reserve1.low.toString() * 1e12;
@@ -149,12 +150,13 @@ export async function runSimulation(input: number): Promise<SimulationResponse> 
     finalPrice,
     ammMidPrice,
     ammOutputPrice,
+    ammPair,
     reserve0: reserve0.low,
     reserve1: reserve1.low,
     ammOutput: parseInt(ammOutput.toString()) / 1e18,
     bestOutput: parseInt(bestOutput.toString()) / 1e18,
     clobOutput: parseInt(currentOrderOutput.toString()) / 1e6,
-    remainingInput: parseInt(remainingInput.toString()) / 1e6,
-    selectedOrders: selectedOrders.map(printableOrder),
+    remainingInput: remainingInput,
+    selectedOrders: selectedOrders,
   };
 }
