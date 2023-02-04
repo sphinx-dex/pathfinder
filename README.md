@@ -58,3 +58,7 @@ To run simulation
 cd pathfinder/packages/simulations
 yarn ts-node simulate-testnet.ts
 ```
+
+### Contributors
+
+* Dmihal
