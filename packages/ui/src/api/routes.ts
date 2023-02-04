@@ -52,8 +52,8 @@ function getSlippageReduction({ ammMidPrice, ammOutputPrice, finalPrice }: Simul
 function getProportions(input: number, remainingInput: number): [jediswap: number, sphinx: number] {
   const diff = input - remainingInput;
 
-  const sphinxProportion = diff / input;
-  const jediswapProportion = 1 - sphinxProportion;
+  const jediswapProportion = diff / input;
+  const sphinxProportion = 1 - jediswapProportion;
   return [jediswapProportion, sphinxProportion];
 }
 
