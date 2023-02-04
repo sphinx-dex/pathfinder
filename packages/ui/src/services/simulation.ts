@@ -8,7 +8,7 @@ import orderBookAbi from '../abis/OrderBook.json';
 const ETH = '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7';
 const USDC = '0x005a643907b9a4bc6a55e9069c4fd5fd1f5c79a22470690f75556c4736e34426';
 const factoryAddress = '0x262744f8cea943dadc8823c318eaf24d0110dee2ee8026298f49a3bc58ed74a';
-const orderBookAddress = '0x017c254cb2a3652455984e3da0ad97b377d80b62c4b87402c5b50c0f7bdd72f0';
+const orderBookAddress = '0x041b4a4558dfe4c2ca43838215b6c21840e669f7dd35efedb43876782a652b87';
 
 export interface SimulationResponse {
   finalPrice: number;
