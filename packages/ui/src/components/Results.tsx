@@ -35,13 +35,13 @@ function TokenPair({ token1 , token2 }: {token1: CoinBadgeProps, token2: CoinBad
   );
 }
 
-function ResultLine({ name, result }: {name: string, result: string }) {
+function ResultLine({ name, result, color }: {name: string, result: string, color: string }) {
   return (
     <Group my={10} style={{ justifyContent: 'space-between'}}>
       <Text >
         {name}
       </Text>
-      <span style={{color:  '#0fe337', fontWeight: 'bold', textAlign:'right'}}>{result}</span>
+      <span style={{color , fontWeight: 'bold', textAlign:'right'}}>{result}</span>
     </Group>
   );
 }
@@ -53,16 +53,20 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
   return (
     <Stack>
       <Paper radius={20} style={{ textAlign: 'start', background: '#2C2E33' }} p={'md'}>
-        <ResultLine name={'Original price impact on Jediswap'} result={`+${result.originalPriceImpact.toFixed(2)}%`}/>
+        <ResultLine name={'Original slippage on Jediswap'} color={'red'} result={`-${result.originalPriceImpact.toFixed(2)}%`}/>
         <Divider></Divider>
-        <ResultLine name={'After price routing impact'} result={`+${result.priceRoutingImpact.toFixed(2)}%`}/>
+        <ResultLine name={'Slippage after routing optimization'} color={'rgb(243 138 32)'} result={`-${result.priceRoutingImpact.toFixed(2)}%`}/>
         <Divider></Divider>
-        <ResultLine name={'Slippage reduction'} result={`${result.slippageReduction.toFixed(2)}%`}/>
+        <ResultLine name={'Slippage reduction'} color={'#0fe337'} result={`+${result.slippageReduction.toFixed(2)}%`}/>
         <Divider></Divider>
 
         <Group my={10} style={{ justifyContent: 'space-between'}}>
-          <Text> Additional tokens </Text>
-          <span style={{ fontWeight: 'bold'}}>{result.originalTokensOut.toFixed(2) + ' -> ' + result.tokensOut.toFixed(2)}</span>
+          <Text>Tokens gained</Text>
+          <div>
+          <span style={{color: 'red', fontWeight: 'bold'}}>{result.originalTokensOut.toFixed(2)} {tokenOut.label}</span>
+          {" -> "}
+          <span style={{color: 'rgb(15 227 55)',fontWeight: 'bold'}}>{result.tokensOut.toFixed(2)} {tokenOut.label}</span>
+          </div>
         </Group>
       </Paper>
 
