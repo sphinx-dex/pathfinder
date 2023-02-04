@@ -44,16 +44,12 @@ function App() {
     setLoading(false);
   }
 
-  const onSwap = async () => {
-    throw Error('not implemented');
-  }
-
   const onParameterChanged = () => {
     setResult(undefined);
     setAmountOut(0);
   }
 
-  const swap = () => {
+  const onSwap = () => {
     if (!wallet || !wallet.account) {
       console.log(wallet)
       throw new Error('No Wallet')
@@ -107,7 +103,6 @@ function App() {
                 <Text color={'dimmed'}>Finding best route</Text> : 
                 result ? 'Swap' : 'Preview Route'}
             </Button>
-            <Button onClick={swap}>Swap</Button>
           </Stack>
         </Paper>
       </Center>
