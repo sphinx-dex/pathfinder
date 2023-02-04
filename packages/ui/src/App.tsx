@@ -6,6 +6,7 @@ import { getRoute, GetRouteResponse } from './api/routes';
 import { Results } from './components/Results';
 import { tokens } from './tokens';
 import logo from './assets/sphinx_logo.png'
+import { ConnectWallet } from './components/ConnectWallet';
 
 function App() {
   
@@ -51,7 +52,9 @@ function App() {
               <Text>Pathfinder</Text>
             </div>
           </Group>
-
+          <Group>
+            <ConnectWallet />
+          </Group>
         </Header>
       }
     >
