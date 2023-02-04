@@ -32,6 +32,11 @@ function App() {
     setLoading(false);
   }
 
+  const onParameterChanged = () => {
+    setResult(undefined);
+    setAmountOut(0);
+  }
+
   return (
     <AppShell
       header={
@@ -49,8 +54,8 @@ function App() {
       <Center>
         <Paper w={450} p={'lg'} pt={50} withBorder radius={'lg'}>
           <Stack spacing="xs">
-            <TokenSelect onChange={(v) => setAmount(v)} onTokenSelected={(t) => setTokenIn(t ?? undefined)}/>
-            <TokenSelect value={amountOut?.toString()} onChange={() => {}} disabled onTokenSelected={(t) => setTokenOut(t ?? undefined)}/>
+            <TokenSelect onChange={(v) => (setAmount(v), onParameterChanged())} onTokenSelected={(t) => (setTokenIn(t ?? undefined), onParameterChanged())}/>
+            <TokenSelect value={amountOut?.toString()} onChange={() => {}} disabled onTokenSelected={(t) => (setTokenOut(t ?? undefined), onParameterChanged())}/>
             {result && 
             <Results 
               result={result} 

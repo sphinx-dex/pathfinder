@@ -53,11 +53,12 @@ function getProportions(input: number, remainingInput: number): [jediswap: numbe
   const diff = input - remainingInput;
   const jediswapProportion = diff / input;
   const sphinxProportion = 1 - jediswapProportion;
-  return [jediswapProportion, sphinxProportion];
+  return [sphinxProportion, jediswapProportion];
 }
 
 export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> {
   const result: SimulationResponse = await runSimulation(props.amountIn * 1e6);
+  const [sphinxProportion, jediswapProportion] = getProportions(props.amountIn, result.remainingInput);
   return {
     originalPriceImpact: getOriginalPriceImpact(result),
     priceRoutingImpact: getAfterPriceRoutingImpact(result),
@@ -66,22 +67,22 @@ export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> 
     originalTokensOut: result.ammOutputPrice,
     routes: [
       {
-        amm: 'Jediswap',
-        type: 'AMM V2',
-        pair: {
-          in: 'ETH',
-          out: 'USDC'
-        },
-        proportion: getProportions(props.amountIn, result.remainingInput)[0] * 100
-      },
-      {
         amm: 'Sphinx',
         type: 'Orderbook',
         pair: {
           in: 'ETH',
           out: 'USDC'
         },
-        proportion: getProportions(props.amountIn, result.remainingInput)[1] * 100
+        proportion: sphinxProportion * 100
+      },
+      {
+        amm: 'Jediswap',
+        type: 'AMM V2',
+        pair: {
+          in: 'ETH',
+          out: 'USDC'
+        },
+        proportion: jediswapProportion * 100
       }
     ]
   };

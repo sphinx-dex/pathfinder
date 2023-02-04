@@ -47,14 +47,12 @@ function ResultLine({ name, result }: {name: string, result: string }) {
 }
 
 export function Results({result, tokenIn, tokenOut}: ResutsProps) {
-
-  const tokenInRef = useRef(null);
   const proportion1Ref = useRef(null);
   const proportion2Ref = useRef(null);
 
   return (
     <Stack>
-      <Paper style={{ textAlign: 'start', background: '#2C2E33' }} p={'md'}>
+      <Paper radius={20} style={{ textAlign: 'start', background: '#2C2E33' }} p={'md'}>
         <ResultLine name={'Original price impact on Jediswap'} result={`+${result.originalPriceImpact.toFixed(2)}%`}/>
         <Divider></Divider>
         <ResultLine name={'After price routing impact'} result={`+${result.priceRoutingImpact.toFixed(2)}%`}/>
