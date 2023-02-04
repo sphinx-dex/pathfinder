@@ -4,11 +4,13 @@ import { Stack, Paper, AppShell, Center, Button, Header, Text, Loader } from '@m
 import { TokenSelect } from './components/TokenSelect';
 import { getRoute, GetRouteResponse } from './api/routes';
 import { Results } from './components/Results';
+import { tokens } from './tokens';
 
 function App() {
   
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState<number>();
+  const [amountOut, setAmountOut] = useState<number>();
   const [tokenIn, setTokenIn] = useState<string | undefined>();
   const [tokenOut, setTokenOut] = useState<string | undefined>();
 
@@ -25,7 +27,7 @@ function App() {
       tokenOut: tokenOut
     });
     setResult(response);
-    setTokenOut(response.tokensOut.toString());
+    setAmountOut(response.tokensOut);
     setLoading(false);
   }
 
@@ -43,9 +45,12 @@ function App() {
         <Paper w={450} p={'lg'} pt={50} withBorder radius={'lg'}>
           <Stack spacing="xs">
             <TokenSelect onChange={(v) => setAmount(v)} onTokenSelected={(t) => setTokenIn(t ?? undefined)}/>
-            <TokenSelect value={tokenOut} onChange={() => {}} disabled onTokenSelected={(t) => setTokenOut(t ?? undefined)}/>
+            <TokenSelect value={amountOut?.toString()} onChange={() => {}} disabled onTokenSelected={(t) => setTokenOut(t ?? undefined)}/>
             {result && 
-             <Results result={result} tokenOut={tokenOut} />
+            <Results 
+              result={result} 
+              tokenIn={tokens.find(t => t.value === tokenIn)!}
+              tokenOut={tokens.find(t => t.value === tokenOut)!}/>
             }
             <Button
               disabled={loading || !valid}
