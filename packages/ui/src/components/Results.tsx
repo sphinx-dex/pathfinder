@@ -68,7 +68,7 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
         </Group>
       </Paper>
 
-      <Paper style={{ textAlign: 'start', background: '#2C2E33' }} p={'md'}>
+      <Paper radius={20} style={{ textAlign: 'start', background: '#2C2E33' }} p={'md'}>
         <Grid>
           <Xarrow
             strokeWidth={2}
@@ -109,13 +109,13 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
           
           <Grid.Col span={8}>
             <Center style={{ flexDirection: 'column'}}>
-              <Badge ref={proportion1Ref} m={20} color={'violet'}>
+              <Badge ref={proportion1Ref} m={20} size="lg" color={'violet'}>
                 <Text >
                   {result.routes[0].amm} - {result.routes[0].proportion.toFixed(2)}%
                 </Text>
               </Badge>
                 <TokenPair token1={tokenIn} token2={tokenOut}/>
-              <Badge ref={proportion2Ref} m={20} color={'orange'}>
+              <Badge ref={proportion2Ref} m={20} size="lg" color={'orange'}>
                 <Text >
                   {result.routes[1].amm} - {result.routes[1].proportion.toFixed(2)}%
                 </Text>
