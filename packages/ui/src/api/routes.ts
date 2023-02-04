@@ -51,8 +51,8 @@ function getSlippageReduction({ ammMidPrice, ammOutputPrice, finalPrice }: Simul
 
 function getProportions(input: number, remainingInput: number): [jediswap: number, sphinx: number] {
   const diff = input - remainingInput;
-  const jediswapProportion = diff / input;
-  const sphinxProportion = 1 - jediswapProportion;
+  const sphinxProportion = diff / input;
+  const jediswapProportion = 1 - sphinxProportion;
   return [jediswapProportion, sphinxProportion];
 }
 
@@ -62,8 +62,8 @@ export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> 
     originalPriceImpact: getOriginalPriceImpact(result),
     priceRoutingImpact: getAfterPriceRoutingImpact(result),
     slippageReduction: getSlippageReduction(result),
-    tokensOut: result.finalPrice,
-    originalTokensOut: result.ammOutputPrice,
+    tokensOut: result.bestOutput,
+    originalTokensOut: result.ammOutput,
     routes: [
       {
         amm: 'Jediswap',
