@@ -58,3 +58,5 @@ To run simulation
 cd pathfinder/packages/simulations
 yarn ts-node simulate-testnet.ts
 ```
+
+Leads: Remi Gai, Park Hay
