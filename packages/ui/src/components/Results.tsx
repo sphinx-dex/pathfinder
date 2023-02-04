@@ -69,6 +69,7 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
       <Paper radius={20} style={{ textAlign: 'start', background: '#2C2E33' }} p={'md'}>
         <Grid>
           <Xarrow
+            lineColor={'gray'}
             strokeWidth={2}
             start={tokenIn.label}
             end={proportion1Ref}
@@ -77,6 +78,7 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
           />
 
           <Xarrow
+            lineColor={'gray'}
             strokeWidth={2}
             start={tokenIn.label}
             end={proportion2Ref}
@@ -85,6 +87,7 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
           />
 
           <Xarrow
+            lineColor={'gray'}
             strokeWidth={2}
             start={proportion1Ref}
             end={tokenOut.label}
@@ -93,6 +96,7 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
           />
 
           <Xarrow
+            lineColor={'gray'}
             strokeWidth={2}
             start={proportion2Ref}
             end={tokenOut.label}
