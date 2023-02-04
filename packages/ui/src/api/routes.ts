@@ -59,11 +59,13 @@ function getProportions(input: number, remainingInput: number): [jediswap: numbe
 
 export async function getRoute(props: GetRouteProps): Promise<GetRouteResponse> {
   const result: SimulationResponse = await runSimulation(props.amountIn * 1e6);
+  const originalPriceImpact = getOriginalPriceImpact(result);
+  const afterPriceRoutingImpact = getAfterPriceRoutingImpact(result);
   const [sphinxProportion, jediswapProportion] = getProportions(props.amountIn, result.remainingInput);
   return {
-    originalPriceImpact: getOriginalPriceImpact(result),
-    priceRoutingImpact: getAfterPriceRoutingImpact(result),
-    slippageReduction: getSlippageReduction(result),
+    originalPriceImpact: originalPriceImpact,
+    priceRoutingImpact: afterPriceRoutingImpact,
+    slippageReduction: originalPriceImpact - afterPriceRoutingImpact,
     tokensOut: result.bestOutput,
     originalTokensOut: result.ammOutput,
     routes: [

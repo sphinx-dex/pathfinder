@@ -61,7 +61,7 @@ export function Results({result, tokenIn, tokenOut}: ResutsProps) {
         <Divider></Divider>
 
         <Group my={10} style={{ justifyContent: 'space-between'}}>
-          <Text> Price reduction </Text>
+          <Text> Additional tokens </Text>
           <span style={{ fontWeight: 'bold'}}>{result.originalTokensOut.toFixed(2) + ' -> ' + result.tokensOut.toFixed(2)}</span>
         </Group>
       </Paper>
