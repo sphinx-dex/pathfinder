@@ -21,14 +21,18 @@ function App() {
   
   const onPreviewRoute = async () => {
     if (!amount || !tokenIn || !tokenOut) return;
-    setLoading(true);
-    const response = await getRoute({
-      amountIn: amount,
-      tokenIn: tokenIn,
-      tokenOut: tokenOut
-    });
-    setResult(response);
-    setAmountOut(response.tokensOut);
+    try {
+      setLoading(true);
+      const response = await getRoute({
+        amountIn: amount,
+        tokenIn: tokenIn,
+        tokenOut: tokenOut
+      });
+      setResult(response);
+      setAmountOut(response.tokensOut);
+    } catch (e) {
+      console.warn(e);
+    }
     setLoading(false);
   }
 
