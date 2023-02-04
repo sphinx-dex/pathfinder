@@ -37,6 +37,10 @@ function App() {
     setLoading(false);
   }
 
+  const onSwap = async () => {
+    throw Error('not implemented');
+  }
+
   const onParameterChanged = () => {
     setResult(undefined);
     setAmountOut(0);
@@ -77,9 +81,12 @@ function App() {
               mt={'xl'} 
               radius="lg" 
               size="xl" 
-              onClick={onPreviewRoute} 
+              onClick={result ? onSwap : onPreviewRoute} 
               leftIcon={loading && <Loader size={'xs'}/>}>
-              {loading ? <Text color={'dimmed'}>Finding best route</Text> : 'Preview Route'}
+              
+              {loading ? 
+                <Text color={'dimmed'}>Finding best route</Text> : 
+                result ? 'Swap' : 'Preview Route'}
             </Button>
           </Stack>
         </Paper>
