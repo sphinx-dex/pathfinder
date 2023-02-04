@@ -48,7 +48,9 @@ function getPartialFill({ order, remainingInput, reserve0, reserve1, currentOrde
 }) {
   let amount = order.amount.div(new BN(2));
 
-  for (let i = 0; i < 10; i += 1) {
+  const NUM_ITERATIONS = 10;
+
+  for (let i = 0; i < NUM_ITERATIONS; i += 1) {
     const orderCost = order.price.mul(amount).div(new BN(10).pow(new BN(30)));
     const ammOut = getAMMOutput(remainingInput.sub(orderCost), reserve0, reserve1);
     const output = currentOrderOutput.add(order.amount).add(ammOut);
@@ -57,7 +59,10 @@ function getPartialFill({ order, remainingInput, reserve0, reserve1, currentOrde
       amount = amount.add(order.amount.div(new BN(2 ** i)));
     } else {
       amount = amount.sub(order.amount.div(new BN(2 ** i)));
-      break;
+
+      if (i == NUM_ITERATIONS - 1) {
+        return null;
+      }
     }
   }
 
@@ -107,8 +112,9 @@ export async function runSimulation(input: number): Promise<SimulationResponse> 
         currentOrderOutput,
         bestOutput,
       });
-      selectedOrders.push(partialFill);
-
+      if (partialFill) {
+        selectedOrders.push(partialFill);
+      }
       break;
     }
 
@@ -129,7 +135,9 @@ export async function runSimulation(input: number): Promise<SimulationResponse> 
         currentOrderOutput,
         bestOutput,
       });
-      selectedOrders.push(partialFill);
+      if (partialFill) {
+        selectedOrders.push(partialFill);
+      }
       break;
     }
   }
